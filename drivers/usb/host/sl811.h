@@ -1,8 +1,6 @@
 #ifndef __UBOOT_SL811_H
 #define __UBOOT_SL811_H
 
-#undef SL811_DEBUG
-
 #ifdef SL811_DEBUG
 	#define PDEBUG(level, fmt, args...) \
 		if (debug >= (level)) printf("[%s:%d] " fmt, \

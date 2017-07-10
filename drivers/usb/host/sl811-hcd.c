@@ -23,7 +23,6 @@
 #include <usb.h>
 #include "sl811.h"
 
-#include "../../../board/kup/common/kup.h"
 
 #ifdef __PPC__
 # define EIEIO		__asm__ volatile ("eieio")
@@ -31,8 +30,6 @@
 # define EIEIO		/* nothing */
 #endif
 
-#define	 SL811_ADR (0x50000000)
-#define	 SL811_DAT (0x50000001)
 
 #ifdef SL811_DEBUG
 static int debug = 9;
@@ -87,37 +84,6 @@ static void inline sl811_write_buf(__u8 offset, __u8 *buf, __u8 size)
 		*(volatile unsigned char *) (SL811_DAT) = *buf++;
 		EIEIO;
 	}
-}
-
-int usb_init_kup4x (void)
-{
-	volatile immap_t *immap = (immap_t *) CONFIG_SYS_IMMR;
-	volatile memctl8xx_t *memctl = &immap->im_memctl;
-	int i;
-	unsigned char tmp;
-
-	memctl = &immap->im_memctl;
-	memctl->memc_or7 = 0xFFFF8726;
-	memctl->memc_br7 = 0x50000401;	/* start at 0x50000000 */
-	/* BP 14 low = USB ON */
-	immap->im_cpm.cp_pbdat &= ~(BP_USB_VCC);
-	/* PB 14 nomal port */
-	immap->im_cpm.cp_pbpar &= ~(BP_USB_VCC);
-	/* output */
-	immap->im_cpm.cp_pbdir |= (BP_USB_VCC);
-
-	puts ("USB:   ");
-
-	for (i = 0x10; i < 0xff; i++) {
-		sl811_write(i, i);
-		tmp = (sl811_read(i));
-		if (tmp != i) {
-			printf ("SL811 compare error index=0x%02x read=0x%02x\n", i, tmp);
-			return (-1);
-		}
-	}
-	printf ("SL811 ready\n");
-	return (0);
 }
 
 /*
@@ -195,6 +161,7 @@ static int sl811_hc_reset(void)
 
 int usb_lowlevel_init(int index, enum usb_init_type init, void **controller)
 {
+	PDEBUG(5, "usb_lowlevel_init\n");
 	root_hub_devnum = 0;
 	sl811_hc_reset();
 	return 0;
@@ -202,6 +169,7 @@ int usb_lowlevel_init(int index, enum usb_init_type init, void **controller)
 
 int usb_lowlevel_stop(int index)
 {
+	PDEBUG(5, "usb_lowlevel_stop\n");
 	sl811_hc_reset();
 	return 0;
 }
@@ -253,6 +221,7 @@ static int sl811_send_packet(struct usb_device *dev, unsigned long pipe, __u8 *b
 
 		sl811_write(SL811_INTRSTS, 0xff);
 		status = sl811_read(SL811_STS_A);
+		// PDEBUG(7, "status=%#x len=%d\n", (int)status, len);
 
 		if (status & SL811_USB_STS_ACK) {
 			int remainder = sl811_read(SL811_CNT_A);
@@ -303,6 +272,7 @@ int submit_bulk_msg(struct usb_device *dev, unsigned long pipe, void *buffer,
 		int res = sl811_send_packet(dev, pipe, (__u8*)buffer+done,
 					    max > len - done ? len - done : max);
 		if (res < 0) {
+			PDEBUG(0, "error %d\n",res);
 			dev->status = -res;
 			return res;
 		}
@@ -331,7 +301,7 @@ int submit_control_msg(struct usb_device *dev, unsigned long pipe, void *buffer,
 	if (devnum == root_hub_devnum)
 		return sl811_rh_submit_urb(dev, pipe, buffer, len, setup);
 
-	PDEBUG(7, "dev = %d pipe = %ld buf = %p size = %d rt = %#x req = %#x bus = %i\n",
+	PDEBUG(7, "dev = %d pipe = %d buf = %p size = %d rt = %#x req = %#x bus = %i\n",
 	       devnum, ep, buffer, len, (int)setup->requesttype,
 	       (int)setup->request, sl811_read(SL811_SOFCNTDIV)*64);
 
