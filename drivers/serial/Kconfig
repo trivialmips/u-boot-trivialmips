@@ -385,6 +385,14 @@ config DEBUG_UART_MTK
 	  driver will be available until the real driver model serial is
 	  running.
 
+config DEBUG_UART_TrivialMIPS
+        bool "TrivialMIPS"
+        depends on TRIVIALMIPS_SERIAL
+        help
+          Select this to enable a debug UART using the serial_trivialmips driver. You
+          will need to provide parameters to make this work. The driver will
+          be available until the real driver model serial is running.
+
 endchoice
 
 config DEBUG_UART_BASE
@@ -759,6 +767,14 @@ config MPC8XX_CONS
 	bool "Console driver for MPC8XX"
 	depends on MPC8xx
 	default y
+
+
+config TRIVIALMIPS_SERIAL
+        bool "Support for TRIVIALMIPS on-chip UART"
+        depends on DM_SERIAL && MACH_TRIVIALMIPS
+        default y
+        help
+          Support for the UART found on TRIVIALMIPS.
 
 choice
 	prompt "Console port"
