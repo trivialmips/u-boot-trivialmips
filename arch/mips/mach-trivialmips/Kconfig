@@ -1,0 +1,14 @@
+menu "TrivialMIPS platforms"
+    depends on MACH_TRIVIALMIPS
+
+choice
+    prompt "Board select"
+
+config TARGET_TRIVIALMIPS_THINPAD
+    bool "Thinpad board 2017"
+
+endchoice
+
+source "board/thucst/Kconfig"
+
+endmenu

@@ -141,6 +141,16 @@ config TARGET_XILFPGA
 	help
 	  This supports IMGTEC MIPSfpga platform
 
+config MACH_TRIVIALMIPS
+	bool "Support TrivialMIPS"
+	select OF_CONTROL
+	select DM
+	select DM_SERIAL
+	select SUPPORTS_LITTLE_ENDIAN
+	select SUPPORTS_CPU_MIPS32_R1
+	select ROM_EXCEPTION_VECTORS
+	help
+	  This supports TrivialMIPS platform
 endchoice
 
 source "board/imgtec/boston/Kconfig"

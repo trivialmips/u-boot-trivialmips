@@ -1,0 +1,15 @@
+if TARGET_NAIVEMIPS_THINPAD
+
+config SYS_BOARD
+    default "thinpad"
+
+config SYS_VENDOR
+    default "thucst"
+
+config SYS_CONFIG_NAME
+    default "trivialmips_thinpad"
+
+config SYS_TEXT_BASE
+    default 0x80000000
+
+endif
