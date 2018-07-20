@@ -27,6 +27,10 @@ int board_eth_init(bd_t *bis)
 #ifdef CONFIG_RESET_PHY_R
 void reset_phy(void)
 {
+#ifdef CONFIG_DRIVER_DM9000
+    /*
+     * Initialize ethernet HW addr prior to starting Linux,
+     * needed for nfsroot
      */
     eth_init();
 #endif

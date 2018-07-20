@@ -31,7 +31,7 @@
  * Commands
  */
 //#define CONFIG_SYS_LONGHELP		/* undef to save memory */
-#define CONFIG_CMDLINE_EDITING
+//#define CONFIG_CMDLINE_EDITING
 
 /*------------------------------------------------------------
  * Console Configuration
