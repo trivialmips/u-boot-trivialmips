@@ -15,6 +15,10 @@
 /* Cache Configuration */
 #define CONFIG_SYS_MIPS_CACHE_MODE	CONF_CM_CACHABLE_NONCOHERENT
 
+/* Time Measuring */
+#define THINPAD_TIMER_USEC_ADDR		0xA4000000
+#define THINPAD_TIMER_TICK_ADDR		0xA4000004
+
 /*----------------------------------------------------------------------
  * Memory Layout
  */
