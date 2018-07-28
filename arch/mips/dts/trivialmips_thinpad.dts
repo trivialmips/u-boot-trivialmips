@@ -21,14 +21,13 @@
 		console = &uart_dev;
 	};
 
-	uart_dev: serial@10400000 {
+	uart_dev: serial@a3000000 {
 		compatible = "trivialmips-uart";
 		reg = <0xa3000000 0x8>;
-
 		clock-frequency = <11059200>;
 
 	};
-	flash@1e000000 {
+	flash@a1000000 {
 		compatible = "cfi-flash";
 		reg = <0xa1000000 0x00800000>;
 		bank-width = <2>;
