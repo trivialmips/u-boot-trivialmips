@@ -39,15 +39,17 @@
 	};
 
 	aliases {
-		console = &uart_dev;
+		console = &serial0;
 		spi0 = &axi_qspi;
 	};
 
-	uart_dev: serial@bfd03000 {
+	serial0: serial@bfd03000 {
 		compatible = "ns16550";
-		reg = <0xbfd00000 0x1000>;
+		reg = <0xbfd03000 0x1000>;
+                reg-offset = <0>;
                 reg-shift = <2>;
                 clock-frequency = <100000000>;
+                current-speed = <115200>;
 		interrupts = <3 0>;
                 interrupt-parent = <&cpuintc>;
 	};
