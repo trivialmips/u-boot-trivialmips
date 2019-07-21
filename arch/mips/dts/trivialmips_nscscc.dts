@@ -1,18 +1,39 @@
 /dts-v1/;
 
-#include "microAptiv.dtsi"
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	compatible = "img,xilfpga";
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "mips,m14Kc";
+			clocks	= <&ext>;
+			reg = <0>;
+		};
+	};
+
+	ext: ext {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+	};
+};
 
 / {
 	compatible = "nscscc,fpga-a7";
 
-	memory {
+	memory: memory@0 {
 		device_type = "memory";
 		reg = <0x0 0x8000000>;
 	};
 
-	cpuintc: interrupt-controller@0 {
+	cpuintc: interrupt-controller@bd000000 {
 		#address-cells = <0>;
 		#interrupt-cells = <1>;
+                reg = <0xbd000000 0x20>;
 		interrupt-controller;
 		compatible = "mti,cpu-interrupt-controller";
 	};
@@ -28,6 +49,7 @@
                 reg-shift = <2>;
                 clock-frequency = <100000000>;
 		interrupts = <3 0>;
+                interrupt-parent = <&cpuintc>;
 	};
 
 	axi_qspi: spi@bc040000 {

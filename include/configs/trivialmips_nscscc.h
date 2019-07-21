@@ -89,10 +89,6 @@
 #define CONFIG_SYS_MAX_FLASH_SECT           64
 
 
-#define CONFIG_ENV_IS_NOWHERE      1
-#define CONFIG_ENV_SIZE 0x1000
-
-
 // #define DEBUG
 
 #endif /* __TRIVIALMIPS_NSCSCC_CONFIG_H */

@@ -4,7 +4,7 @@ config SYS_BOARD
     default "2019"
 
 config SYS_VENDOR
-    default "loongson"
+    default "nscscc"
 
 config SYS_CONFIG_NAME
     default "trivialmips_nscscc"
