@@ -1,0 +1,73 @@
+/dts-v1/;
+
+#include "microAptiv.dtsi"
+
+/ {
+	compatible = "nscscc,fpga-a7";
+
+	memory {
+		device_type = "memory";
+		reg = <0x0 0x8000000>;
+	};
+
+	cpuintc: interrupt-controller@0 {
+		#address-cells = <0>;
+		#interrupt-cells = <1>;
+		interrupt-controller;
+		compatible = "mti,cpu-interrupt-controller";
+	};
+
+	aliases {
+		console = &uart_dev;
+		spi0 = &axi_qspi;
+	};
+
+	uart_dev: serial@bfd03000 {
+		compatible = "ns16550";
+		reg = <0xbfd00000 0x1000>;
+                reg-shift = <2>;
+                clock-frequency = <100000000>;
+		interrupts = <3 0>;
+	};
+
+	axi_qspi: spi@bc040000 {
+                #address-cells = <1>;
+                #size-cells = <0>;
+		compatible = "xlnx,xps-spi-2.00.a";
+		reg = <0xbc040000 0x1000>;
+		fifo-size = <256>;
+		xlnx,spi-mode = <0>;
+
+                spi-flash@0 {
+                    compatible = "spi-flash", "jedec,spi-nor";
+                    reg = <0>;
+                    spi-max-frequency = <30000000>;
+                };
+	};
+
+	axi_ethernetlite: ethernet@bc000000 {
+		compatible = "xlnx,xps-ethernetlite-1.00.a";
+		device_type = "network";
+		local-mac-address = [19 98 00 01 00 29];
+		phy-handle = <&phy0>;
+		reg = <0xbc000000 0x10000>;
+		xlnx,duplex = <0x1>;
+		xlnx,include-global-buffers = <0x1>;
+		xlnx,include-internal-loopback = <0x0>;
+		xlnx,include-mdio = <0x1>;
+		xlnx,instance = "axi_ethernetlite_inst";
+		xlnx,rx-ping-pong = <0x1>;
+		xlnx,s-axi-id-width = <0x1>;
+		xlnx,tx-ping-pong = <0x1>;
+		xlnx,use-internal = <0x0>;
+		mdio {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				phy0: phy@1 {
+						device_type = "ethernet-phy";
+						reg = <1>;
+				} ;
+		} ;
+	};
+};
+

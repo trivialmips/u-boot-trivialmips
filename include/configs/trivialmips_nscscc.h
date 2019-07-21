@@ -47,6 +47,15 @@
 #define CONFIG_SYS_CBSIZE		1024 /* Console I/O Buffer Size   */
 #define CONFIG_SYS_MAXARGS		16   /* max number of command args*/
 
+
+// serial configuration
+#define CONFIG_CONS_INDEX 1
+#define CONFIG_SYS_NS16550_MEM32
+#define CONFIG_SYS_NS16550_COM1 0xbfd03000
+#define CONFIG_SYS_NS16550_CLK 100000000
+#define CONFIG_SYS_NS16550_IER 0
+
+
 /* -------------------------------------------------
  * Environment
  */
