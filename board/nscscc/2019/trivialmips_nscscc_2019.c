@@ -1,5 +1,7 @@
 
 #include <common.h>
+#include <linux/io.h>
+#include <div64.h>
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -24,12 +26,16 @@ uint64_t notrace get_ticks(void)
 
 ulong get_timer(ulong base)
 {
-        return timer_get_us() / 1000 - base;
+        unsigned long now = timer_get_us();
+	do_div(now, 1000);
+	return now - base;
 }
 
 unsigned long notrace timer_get_us(void)
 {
-        return get_ticks() / 100;
+	uint64_t ticks = get_ticks();
+	do_div(ticks, 100);
+	return ticks;
 }
 
 void __udelay(unsigned long usec)
