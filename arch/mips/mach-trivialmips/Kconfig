@@ -7,8 +7,13 @@ choice
 config TARGET_TRIVIALMIPS_THINPAD
     bool "Thinpad board 2017"
 
+config TARGET_TRIVIALMIPS_NSCSCC
+    bool "NSCSCC board 2019"
+
 endchoice
 
 source "board/thucst/Kconfig"
+
+source "board/nscscc/Kconfig"
 
 endmenu

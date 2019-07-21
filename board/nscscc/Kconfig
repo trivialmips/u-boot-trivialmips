@@ -1,0 +1,15 @@
+if TARGET_TRIVIALMIPS_NSCSCC
+
+config SYS_BOARD
+    default "2019"
+
+config SYS_VENDOR
+    default "loongson"
+
+config SYS_CONFIG_NAME
+    default "trivialmips_nscscc"
+
+config SYS_TEXT_BASE
+    default 0x80000000
+
+endif
