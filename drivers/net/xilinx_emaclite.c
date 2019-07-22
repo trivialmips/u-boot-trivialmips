@@ -523,7 +523,7 @@ try_again:
 	}
 
 	/* Read the rest of the packet which is longer then first read */
-	if (length != first_read)
+	if (length >= first_read)
 		xemaclite_alignedread(addr + first_read,
 				      etherrxbuff + first_read,
 				      length - first_read);
