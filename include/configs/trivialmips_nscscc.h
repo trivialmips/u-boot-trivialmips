@@ -4,7 +4,7 @@
 /* BootROM + MIG is pretty smart. DDR and Cache initialized */
 #define CONFIG_SKIP_LOWLEVEL_INIT
 
-#define DEBUG
+// #define DEBUG
 
 /*--------------------------------------------
  * CPU configuration
@@ -82,14 +82,11 @@
 
 
 /* Flash */
-#define CONFIG_FLASH_CFI_DRIVER
-#define CONFIG_SYS_FLASH_CFI
-#define CONFIG_SYS_FLASH_USE_BUFFER_WRITE
 #define CONFIG_SYS_MAX_FLASH_BANKS_DETECT   1
 #define CONFIG_SYS_MAX_FLASH_SECT           64
 
 
-// #define DEBUG
+#define DEBUG
 
 #endif /* __TRIVIALMIPS_NSCSCC_CONFIG_H */
 

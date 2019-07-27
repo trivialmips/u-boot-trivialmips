@@ -40,7 +40,9 @@
 
 	aliases {
 		console = &serial0;
-		spi0 = &axi_qspi;
+                serial = &serial0;
+		spi0 = &spi_flash;
+                eth = &axi_ethernetlite;
 	};
 
 	serial0: serial@bfd03000 {
@@ -54,7 +56,7 @@
                 interrupt-parent = <&cpuintc>;
 	};
 
-	axi_qspi: spi@bc040000 {
+	spi_flash: spi@bc040000 {
                 #address-cells = <1>;
                 #size-cells = <0>;
 		compatible = "xlnx,xps-spi-2.00.a";
